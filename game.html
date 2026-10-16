@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛸 Alien Abduction - Gọi Học Sinh Trả Bài</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 20px;
+        }
+
+        .stars {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            background: rgba(20, 20, 60, 0.95);
+            border-radius: 25px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(102, 126, 234, 0.4);
+            max-width: 900px;
+            width: 100%;
+            border: 3px solid #667eea;
+            z-index: 10;
+            position: relative;
+            animation: container-glow 3s ease-in-out infinite;
+        }
+
+        @keyframes container-glow {
+            0%, 100% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 30px rgba(102, 126, 234, 0.3); }
+            50% { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7), 0 0 50px rgba(102, 126, 234, 0.6); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .header h1 {
+            color: #00ff88;
+            font-size: 2.8em;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 15px rgba(0, 255, 136, 0.6), 0 0 30px rgba(0, 255, 136, 0.3);
+            animation: title-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes title-glow {
+            0%, 100% { text-shadow: 0 0 15px rgba(0, 255, 136, 0.6); }
+            50% { text-shadow: 0 0 25px rgba(0, 255, 136, 0.9), 0 0 35px rgba(0, 255, 136, 0.5); }
+        }
+
+        .header p {
+            color: #ff00ff;
+            font-size: 1.2em;
+            letter-spacing: 1px;
+        }
+
+        .setup-section {
+            background: rgba(50, 50, 100, 0.6);
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            color: #00ffff;
+            margin-bottom: 10px;
+            font-weight: bold;
+            font-size: 1.05em;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #fff;
+            font-size: 1em;
+            transition: all 0.3s;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3), inset 0 0 10px rgba(0, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .mode-selector {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .mode-btn {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.08);
+            color: #00ffff;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.95em;
+            transition: all 0.3s;
+        }
+
+        .mode-btn.active {
+            background: rgba(102, 126, 234, 0.5);
+            border-color: #00ff88;
+            color: #00ff88;
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+            transform: scale(1.03);
+        }
+
+        .mode-btn:hover:not(.active) {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 28px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 15px 30px;
+            font-size: 1.05em;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.3s;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn-start {
+            background: linear-gradient(135deg, #00ff88, #00ffff);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+            font-weight: 900;
+        }
+
+        .btn-start:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(0, 255, 136, 0.8);
+        }
+
+        .btn-start:active {
+            transform: scale(0.98);
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a6f);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 107, 107, 0.5);
+        }
+
+        .btn-reset:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 35px rgba(255, 107, 107, 0.8);
+        }
+
+        .game-section {
+            display: none;
+        }
+
+        .game-section.active {
+            display: block;
+            animation: fade-in 0.5s ease-in;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .spaceship {
+            font-size: 4.5em;
+            margin-bottom: 20px;
+            animation: spaceship-float 4s ease-in-out infinite;
+            display: inline-block;
+            width: 100%;
+        }
+
+        @keyframes spaceship-float {
+            0%, 100% { transform: translateY(0px) rotateZ(-5deg); }
+            25% { transform: translateY(-15px) rotateZ(0deg); }
+            50% { transform: translateY(-25px) rotateZ(5deg); }
+            75% { transform: translateY(-15px) rotateZ(0deg); }
+        }
+
+        .abduction-beam {
+            position: relative;
+            width: 180px;
+            height: 250px;
+            margin: 20px auto;
+            background: linear-gradient(to right, 
+                transparent 0%, 
+                rgba(0, 255, 200, 0.2) 15%,
+                rgba(0, 255, 200, 0.4) 35%, 
+                rgba(0, 255, 200, 0.5) 50%, 
+                rgba(0, 255, 200, 0.4) 65%,
+                rgba(0, 255, 200, 0.2) 85%,
+                transparent 100%);
+            border-radius: 50% 50% 0 0 / 30% 30% 0 0;
+            animation: beam-pulse 1.5s ease-in-out infinite;
+            box-shadow: 0 0 40px rgba(0, 255, 200, 0.5), 
+                        inset 0 0 30px rgba(0, 255, 200, 0.3);
+            filter: drop-shadow(0 0 20px rgba(0, 255, 200, 0.4));
+        }
+
+        @keyframes beam-pulse {
+            0%, 100% { opacity: 0.4; transform: scaleY(0.8); }
+            50% { opacity: 1; transform: scaleY(1); }
+        }
+
+        .student-name {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: 3px solid #00ffff;
+            border-radius: 15px;
+            padding: 35px 25px;
+            margin: 25px 0;
+            font-size: 2.2em;
+            font-weight: bold;
+            color: #00ff88;
+            text-shadow: 0 0 20px rgba(0, 255, 136, 0.6);
+            box-shadow: 0 0 35px rgba(0, 255, 255, 0.3), inset 0 0 15px rgba(0, 255, 255, 0.1);
+            animation: pulse-student 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            text-align: center;
+        }
+
+        @keyframes pulse-student {
+            0% { transform: scale(0.3) rotateZ(-10deg); opacity: 0; }
+            50% { transform: scale(1.15) rotateZ(5deg); }
+            100% { transform: scale(1) rotateZ(0deg); opacity: 1; }
+        }
+
+        .status-bar {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0;
+            font-size: 1.1em;
+        }
+
+        .status-item {
+            background: linear-gradient(135deg, rgba(0, 255, 200, 0.1), rgba(102, 126, 234, 0.2));
+            border: 2px solid #667eea;
+            border-radius: 10px;
+            padding: 18px;
+            color: #00ffff;
+            transition: all 0.3s;
+        }
+
+        .status-item:hover {
+            border-color: #00ffff;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+        }
+
+        .status-value {
+            color: #00ff88;
+            font-weight: bold;
+            font-size: 1.5em;
+            margin-top: 8px;
+        }
+
+        .btn-call {
+            background: linear-gradient(135deg, #ff00ff, #ff006e);
+            color: #fff;
+            padding: 20px 50px;
+            font-size: 1.25em;
+            margin: 25px 0;
+            box-shadow: 0 0 30px rgba(255, 0, 127, 0.5);
+            width: 100%;
+        }
+
+        .btn-call:hover {
+            transform: scale(1.08);
+            box-shadow: 0 0 50px rgba(255, 0, 127, 0.8);
+        }
+
+        .btn-call:active {
+            transform: scale(0.96);
+        }
+
+        .student-display {
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .list-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .called-list, .remaining-list {
+            background: rgba(50, 50, 100, 0.6);
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            padding: 20px;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .called-list h3, .remaining-list h3 {
+            color: #00ffff;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.1em;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .called-item {
+            background: rgba(0, 255, 136, 0.1);
+            border-left: 4px solid #00ff88;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .called-item:hover {
+            background: rgba(0, 255, 136, 0.15);
+            transform: translateX(5px);
+        }
+
+        .called-number {
+            color: #ff00ff;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .called-time {
+            color: #00ffff;
+            font-size: 0.85em;
+        }
+
+        .remaining-item {
+            background: rgba(0, 255, 255, 0.1);
+            border-left: 4px solid #00ffff;
+            padding: 12px 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            color: #fff;
+            transition: all 0.3s;
+        }
+
+        .remaining-item:hover {
+            background: rgba(0, 255, 255, 0.15);
+            transform: translateX(5px);
+        }
+
+        .empty-message {
+            color: rgba(255, 255, 255, 0.6);
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+        }
+
+        .called-list::-webkit-scrollbar,
+        .remaining-list::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .called-list::-webkit-scrollbar-track,
+        .remaining-list::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+        }
+
+        .called-list::-webkit-scrollbar-thumb,
+        .remaining-list::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 136, 0.3);
+            border-radius: 10px;
+        }
+
+        .called-list::-webkit-scrollbar-thumb:hover,
+        .remaining-list::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 255, 136, 0.6);
+        }
+
+        .completion-message {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 255, 200, 0.2));
+            border: 2px solid #00ff88;
+            border-radius: 12px;
+            padding: 20px;
+            color: #00ff88;
+            text-align: center;
+            font-size: 1.2em;
+            margin: 20px 0;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+
+            .student-name {
+                font-size: 1.6em;
+                padding: 25px 15px;
+            }
+
+            .list-container {
+                grid-template-columns: 1fr;
+            }
+
+            .status-bar {
+                grid-template-columns: 1fr;
+            }
+
+            .btn-group {
+                flex-direction: column;
+            }
+
+            .spaceship {
+                font-size: 3.5em;
+            }
+        }
+
+        .pulse {
+            animation: pulse-button 0.5s ease-out;
+        }
+
+        @keyframes pulse-button {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Stars Background -->
+    <div class="stars" id="starfield"></div>
+
+    <div class="container">
+        <!-- ============ SETUP SECTION ============ -->
+        <div class="setup-section" id="setupSection">
+            <div class="header">
+                <h1>🛸 ALIEN ABDUCTION 🛸</h1>
+                <p>⭐ Phi Thuyền Bắt Học Sinh ⭐</p>
+            </div>
+
+            <!-- Mode Selection -->
+            <div class="form-group">
+                <label>📋 Chế Độ Gọi</label>
+                <div class="mode-selector">
+                    <button class="mode-btn active" data-mode="names">👤 Gọi Theo Tên</button>
+                    <button class="mode-btn" data-mode="numbers">🔢 Gọi Theo Số</button>
+                </div>
+            </div>
+
+            <!-- Names Mode -->
+            <div id="namesMode">
+                <div class="form-group">
+                    <label>👥 Danh Sách Tên Học Sinh (Nhập tên từng dòng, tối đa 100)</label>
+                    <textarea id="namesList" placeholder="Ví dụ:&#10;Nguyễn Văn A&#10;Trần Thị B&#10;Lê Minh C&#10;Phạm Thị D&#10;Hoàng Văn E"></textarea>
+                </div>
+            </div>
+
+            <!-- Numbers Mode -->
+            <div id="numbersMode" style="display: none;">
+                <div class="form-group">
+                    <label>🔢 Số Lượng Học Sinh</label>
+                    <input type="number" id="studentCount" value="30" min="1" max="100">
+                </div>
+            </div>
+
+            <!-- Call Count Selection -->
+            <div class="form-group">
+                <label>👆 Gọi Bao Nhiêu Người Cùng Lúc?</label>
+                <select id="callCount">
+                    <option value="1">⚡ 1 người</option>
+                    <option value="2">⚡⚡ 2 người</option>
+                    <option value="3">⚡⚡⚡ 3 người</option>
+                    <option value="4">⚡⚡⚡⚡ 4 người</option>
+                    <option value="5">⚡⚡⚡⚡⚡ 5 người</option>
+                </select>
+            </div>
+
+            <!-- Start Button -->
+            <div class="btn-group">
+                <button class="btn btn-start" onclick="startGame()">🚀 BẮT ĐẦU TRÒ CHƠI 🚀</button>
+            </div>
+        </div>
+
+        <!-- ============ GAME SECTION ============ -->
+        <div class="game-section" id="gameSection">
+            <!-- Spaceship -->
+            <div class="spaceship">🛸</div>
+            
+            <!-- Abduction Beam -->
+            <div class="abduction-beam"></div>
+
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="status-item">
+                    <span>📊 Đã Gọi</span>
+                    <div class="status-value" id="calledCount">0</div>
+                </div>
+                <div class="status-item">
+                    <span>📝 Còn Lại</span>
+                    <div class="status-value" id="remainCount">0</div>
+                </div>
+            </div>
+
+            <!-- Call Button -->
+            <button class="btn btn-call" onclick="callStudents()">⚡ GỌI NGAY ⚡</button>
+
+            <!-- Student Display -->
+            <div class="student-display" id="studentDisplay"></div>
+
+            <!-- Completion Message -->
+            <div id="completionMessage" style="display: none;"></div>
+
+            <!-- Lists Container -->
+            <div class="list-container">
+                <div class="called-list">
+                    <h3>📊 Danh Sách Đã Gọi</h3>
+                    <div id="calledList"></div>
+                </div>
+
+                <div class="remaining-list">
+                    <h3>📝 Danh Sách Còn Lại</h3>
+                    <div id="remainingList"></div>
+                </div>
+            </div>
+
+            <!-- Reset Button -->
+            <div class="btn-group" style="margin-top: 30px;">
+                <button class="btn btn-reset" onclick="resetGame()">🔄 RESET GAME 🔄</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============ TẠO STARFIELD ============
+        function createStarfield() {
+            const starfield = document.getElementById('starfield');
+            for (let i = 0; i < 150; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 2 + 1 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starfield.appendChild(star);
+            }
+        }
+
+        // ============ ÂM THANH ============
+        function playSound(frequency, duration, type = 'sine') {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.type = type;
+                oscillator.frequency.value = frequency;
+                
+                gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + duration);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + duration);
+            } catch (e) {
+                // Nếu không hỗ trợ audio context
+            }
+        }
+
+        function playCallSound() {
+            playSound(800, 0.1);
+            setTimeout(() => playSound(1000, 0.1), 150);
+        }
+
+        function playAbductionSound() {
+            playSound(400, 0.3);
+            setTimeout(() => playSound(600, 0.3), 150);
+            setTimeout(() => playSound(800, 0.3), 300);
+        }
+
+        // ============ GAME STATE ============
+        let gameState = {
+            mode: 'names',
+            students: [],
+            called: [],
+            remaining: [],
+            callCount: 1
+        };
+
+        // ============ MODE SELECTOR ============
+        document.querySelectorAll('.mode-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.mode-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                gameState.mode = this.dataset.mode;
+                
+                if (gameState.mode === 'names') {
+                    document.getElementById('namesMode').style.display = 'block';
+                    document.getElementById('numbersMode').style.display = 'none';
+                } else {
+                    document.getElementById('namesMode').style.display = 'none';
+                    document.getElementById('numbersMode').style.display = 'block';
+                }
+            });
+        });
+
+        // ============ HÀM BẮT ĐẦU GAME ============
+        function startGame() {
+            if (gameState.mode === 'names') {
+                const namesList = document.getElementById('namesList').value.trim();
+                if (!namesList) {
+                    alert('⚠️ Vui lòng nhập danh sách tên học sinh!');
+                    return;
+                }
+                gameState.students = namesList.split('\n')
+                    .map(name => name.trim())
+                    .filter(name => name.length > 0)
+                    .slice(0, 100);
+            } else {
+                const count = parseInt(document.getElementById('studentCount').value);
+                if (count < 1 || count > 100) {
+                    alert('⚠️ Số lượng phải từ 1 đến 100!');
+                    return;
+                }
+                gameState.students = Array.from({length: count}, (_, i) => `Học Sinh ${i + 1}`);
+            }
+
+            gameState.callCount = parseInt(document.getElementById('callCount').value);
+            gameState.called = [];
+            gameState.remaining = [...gameState.students];
+
+            document.getElementById('setupSection').style.display = 'none';
+            document.getElementById('gameSection').classList.add('active');
+            
+            updateDisplay();
+            playAbductionSound();
+        }
+
+        // ============ HÀM GỌI HỌC SINH ============
+        function callStudents() {
+            if (gameState.remaining.length === 0) {
+                alert('🎉 Tất cả học sinh đã được gọi!');
+                return;
+            }
+
+            const count = Math.min(gameState.callCount, gameState.remaining.length);
+            const selectedStudents = [];
+
+            for (let i = 0; i < count; i++) {
+                const randomIndex = Math.floor(Math.random() * gameState.remaining.length);
+                selectedStudents.push(gameState.remaining[randomIndex]);
+                gameState.remaining.splice(randomIndex, 1);
+            }
+
+            selectedStudents.forEach((student, index) => {
+                gameState.called.push({
+                    name: student,
+                    time: new Date().toLocaleTimeString('vi-VN', {hour: '2-digit', minute:'2-digit', second:'2-digit'})
+                });
+            });
+
+            displayStudents(selectedStudents);
+            playCallSound();
+            updateDisplay();
+        }
+
+        // ============ HIỂN THỊ HỌC SINH ============
+        function displayStudents(students) {
+            const display = document.getElementById('studentDisplay');
+            display.innerHTML = '';
+
+            students.forEach((student, index) => {
+                setTimeout(() => {
+                    const div = document.createElement('div');
+                    div.className = 'student-name';
+                    div.textContent = student;
+                    display.appendChild(div);
+                    playCallSound();
+                }, index * 600);
+            });
+        }
+
+        // ============ CẬP NHẬT HIỂN THỊ ============
+        function updateDisplay() {
+            document.getElementById('calledCount').textContent = gameState.called.length;
+            document.getElementById('remainCount').textContent = gameState.remaining.length;
+
+            // Hiển thị danh sách đã gọi
+            const calledList = document.getElementById('calledList');
+            if (gameState.called.length === 0) {
+                calledList.innerHTML = '<div class="empty-message">✨ Chờ gọi...</div>';
+            } else {
+                calledList.innerHTML = gameState.called.map((item, index) => `
+                    <div class="called-item">
+                        <span><span class="called-number">#${index + 1}</span> ${item.name}</span>
+                        <span class="called-time">${item.time}</span>
+                    </div>
+                `).join('');
+            }
+
+            // Hiển thị danh sách còn lại
+            const remainingList = document.getElementById('remainingList');
+            if (gameState.remaining.length === 0) {
+                const completionMsg = document.getElementById('completionMessage');
+                completionMsg.innerHTML = '🎉 <strong>HOÀN TẤT!</strong> Tất cả học sinh đã được gọi! 🎉';
+                completionMsg.style.display = 'block';
+                remainingList.innerHTML = '<div class="empty-message">🌟 Không còn ai</div>';
+            } else {
+                document.getElementById('completionMessage').style.display = 'none';
+                remainingList.innerHTML = gameState.remaining.map((student, index) => `
+                    <div class="remaining-item">
+                        <span style="color: #ffff00;">✨ ${index + 1}. ${student}</span>
+                    </div>
+                `).join('');
+            }
+
+            // Auto scroll
+            calledList.scrollTop = calledList.scrollHeight;
+            remainingList.scrollTop = remainingList.scrollHeight;
+        }
+
+        // ============ RESET GAME ============
+        function resetGame() {
+            if (confirm('🔄 Bạn chắc chắn muốn reset trò chơi?')) {
+                gameState = {
+                    mode: 'names',
+                    students: [],
+                    called: [],
+                    remaining: [],
+                    callCount: 1
+                };
+                document.getElementById('gameSection').classList.remove('active');
+                document.getElementById('setupSection').style.display = 'block';
+                document.getElementById('completionMessage').style.display = 'none';
+            }
+        }
+
+        // ============ INIT ============
+        window.addEventListener('load', () => {
+            createStarfield();
+        });
+    </script>
+</body>
+</html>
